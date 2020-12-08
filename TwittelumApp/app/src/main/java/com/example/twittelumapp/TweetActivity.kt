@@ -1,5 +1,6 @@
 package com.example.twittelumapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.twittelumapp.activities.ListaTweetsActivity
 
 class TweetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +28,7 @@ class TweetActivity : AppCompatActivity() {
         val campoDeMensagemDoTweet = findViewById<EditText>(R.id.tweet_mensagem)
         val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
         Toast.makeText(this, mensagemDoTweet, Toast.LENGTH_LONG).show()
+        finish()
 
     }
 
