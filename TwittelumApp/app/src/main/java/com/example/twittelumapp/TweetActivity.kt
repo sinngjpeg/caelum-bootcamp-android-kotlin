@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.twittelumapp.activities.ListaTweetsActivity
+import com.example.twittelumapp.modelo.Tweet
 
 class TweetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +46,8 @@ class TweetActivity : AppCompatActivity() {
         Log.i("tweet", "botao clicado")
         val campoDeMensagemDoTweet = findViewById<EditText>(R.id.tweet_mensagem)
         val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
-        Toast.makeText(this, mensagemDoTweet, Toast.LENGTH_LONG).show()
+        val tweet = Tweet(mensagemDoTweet)
+        Toast.makeText(this, tweet.toString(), Toast.LENGTH_LONG).show()
         finish()
 
     }
