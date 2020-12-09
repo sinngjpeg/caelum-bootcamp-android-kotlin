@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.twittelumapp.activities.ListaTweetsActivity
+import com.example.twittelumapp.db.TwittelumDatabase
 import com.example.twittelumapp.modelo.Tweet
 
 class TweetActivity : AppCompatActivity() {
@@ -43,12 +44,13 @@ class TweetActivity : AppCompatActivity() {
     }
 
     fun publicaTweet() {
-        Log.i("tweet", "botao clicado")
         val campoDeMensagemDoTweet = findViewById<EditText>(R.id.tweet_mensagem)
         val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
         val tweet = Tweet(mensagemDoTweet)
-        Toast.makeText(this, tweet.toString(), Toast.LENGTH_LONG).show()
-        finish()
+        val tweetDao = TwittelumDatabase.getInstance(this).tweetDao()
+        tweetDao.salva(tweet)
+        Toast.makeText(this, "$tweet foi salvo com sucesso", Toast.LENGTH_LONG).show()
+        //finish()
 
     }
 
