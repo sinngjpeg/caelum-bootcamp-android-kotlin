@@ -10,11 +10,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.twittelumapp.activities.ListaTweetsActivity
 import com.example.twittelumapp.db.TwittelumDatabase
 import com.example.twittelumapp.modelo.Tweet
+import com.example.twittelumapp.viewmodel.TweetViewModel
+import com.example.twittelumapp.viewmodel.ViewModelFactory
 
 class TweetActivity : AppCompatActivity() {
+
+    private val viewModel: TweetViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory).get(TweetViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tweet)
@@ -48,7 +56,7 @@ class TweetActivity : AppCompatActivity() {
         val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
         val tweet = Tweet(mensagemDoTweet)
         val tweetDao = TwittelumDatabase.getInstance(this).tweetDao()
-        tweetDao.salva(tweet)
+        viewModel.salva(tweet)
         Toast.makeText(this, "$tweet foi salvo com sucesso", Toast.LENGTH_LONG).show()
         //finish()
 

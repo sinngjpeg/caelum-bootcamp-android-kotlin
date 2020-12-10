@@ -6,14 +6,22 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.twittelumapp.R
 import com.example.twittelumapp.TweetActivity
 import com.example.twittelumapp.databinding.ActivityListaTweetsBinding
 import com.example.twittelumapp.db.TwittelumDatabase
 import com.example.twittelumapp.modelo.Tweet
+import com.example.twittelumapp.viewmodel.TweetViewModel
+import com.example.twittelumapp.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class ListaTweetsActivity : AppCompatActivity() {
+
+    private val viewModel: TweetViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory).get(TweetViewModel::class.java)
+    }
 
     private lateinit var binding: ActivityListaTweetsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +31,7 @@ class ListaTweetsActivity : AppCompatActivity() {
         binding = ActivityListaTweetsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.lista().observe(this, observer())
 
         binding.fabNovo.setOnClickListener {
             val intencao = Intent(this, TweetActivity::class.java)
@@ -31,13 +40,11 @@ class ListaTweetsActivity : AppCompatActivity() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-
-        val tweetDao = TwittelumDatabase.getInstance(this).tweetDao()
-        val tweets: List<Tweet> = tweetDao.lista()
-
-        val adapter = ArrayAdapter<Tweet>(this, android.R.layout.simple_list_item_1, tweets)
-        binding.listaTweet.adapter = adapter
+    private fun observer(): Observer<List<Tweet>> {
+        return Observer {
+            binding.listaTweet.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
+        }
     }
+
+
 }

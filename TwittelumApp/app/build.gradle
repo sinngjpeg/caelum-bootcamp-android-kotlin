@@ -47,6 +47,8 @@ android {
 
 dependencies {
 
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0' // ViewModel
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.room:room-runtime:2.2.5'
     kapt 'androidx.room:room-compiler:2.2.5' // processador de anotações
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
