@@ -9,6 +9,9 @@ interface TweetDao {
     @Insert
     fun salva(tweet: Tweet)
 
+    @Query("select * from Tweet")
+    fun lista(): List<Tweet>
+
 }
 
 @Database(entities = [Tweet::class], version = 1)
