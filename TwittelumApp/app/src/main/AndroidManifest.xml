@@ -3,6 +3,8 @@
     package="com.example.twittelumapp">
 
     <application
+
+
         android:name=".application.TwittelumApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +20,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".TweetActivity"></activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="br.com.twittelumapp.fileprovider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+
+        </provider>
+
     </application>
 
 </manifest>

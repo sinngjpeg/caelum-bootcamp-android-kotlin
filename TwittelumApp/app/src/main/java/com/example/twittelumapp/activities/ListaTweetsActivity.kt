@@ -18,6 +18,7 @@ import com.example.twittelumapp.viewmodel.ViewModelFactory
 
 class ListaTweetsActivity : AppCompatActivity() {
 
+
     private val viewModel: TweetViewModel by lazy {
         ViewModelProvider(this, ViewModelFactory).get(TweetViewModel::class.java)
 

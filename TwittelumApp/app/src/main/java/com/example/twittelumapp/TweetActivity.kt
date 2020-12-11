@@ -1,8 +1,12 @@
 package com.example.twittelumapp
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -10,15 +14,23 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.example.twittelumapp.activities.ListaTweetsActivity
+import com.example.twittelumapp.databinding.ActivityTweetBinding
 import com.example.twittelumapp.db.TwittelumDatabase
 import com.example.twittelumapp.modelo.Tweet
 import com.example.twittelumapp.viewmodel.TweetViewModel
 import com.example.twittelumapp.viewmodel.ViewModelFactory
+import java.io.File
 
 class TweetActivity : AppCompatActivity() {
+
+    private lateinit var binding : ActivityTweetBinding
+
+    private var localFoto: String? = null
 
     private val viewModel: TweetViewModel by lazy {
         ViewModelProvider(this, ViewModelFactory).get(TweetViewModel::class.java)
@@ -26,7 +38,8 @@ class TweetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tweet)
+        binding = ActivityTweetBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -48,9 +61,8 @@ class TweetActivity : AppCompatActivity() {
             }
 
             R.id.menu_camera -> {
-                val abrirCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivity(abrirCamera)
 
+                tiraFoto()
                 true
             }
             android.R.id.home -> finish()
@@ -71,4 +83,32 @@ class TweetActivity : AppCompatActivity() {
     }
 
 
+    private fun tiraFoto() {
+        val abrirCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val caminhoFoto = defineLocalDaFoto()
+        abrirCamera.putExtra(MediaStore.EXTRA_OUTPUT, caminhoFoto)
+        startActivity(abrirCamera)
+    }
+
+    fun defineLocalDaFoto(): Uri? {
+        localFoto =
+            "${getExternalFilesDir(Environment.DIRECTORY_PICTURES)}/${System.currentTimeMillis()}.jpg"
+        val arquivo = File(localFoto)
+        return FileProvider.getUriForFile(this, "br.com.twittelumapp.fileprovider", arquivo)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (localFoto != null) {
+            carregaFoto()
+        }
+    }
+
+    private fun carregaFoto() {
+        val bitmap = BitmapFactory.decodeFile(localFoto)
+        val bm = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
+        binding.tweetFoto.setImageBitmap(bm)
+        binding.tweetFoto.scaleType = ImageView.ScaleType.FIT_XY
+    }
 }
