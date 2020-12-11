@@ -13,6 +13,9 @@ interface TweetDao {
     @Query("select * from Tweet")
     fun lista(): LiveData<List<Tweet>>
 
+    @Delete
+    fun exclui(tweet: Tweet)
+
 }
 
 @Database(entities = [Tweet::class], version = 1)
@@ -35,5 +38,7 @@ abstract class TwittelumDatabase : RoomDatabase() {
                 .build()
 
         }
+
+
     }
 }

@@ -3,6 +3,7 @@ package com.example.twittelumapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -44,6 +45,13 @@ class TweetActivity : AppCompatActivity() {
             R.id.tweet_menu_tweetar -> {
                 publicaTweet()
                 finish()
+            }
+
+            R.id.menu_camera -> {
+                val abrirCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivity(abrirCamera)
+
+                true
             }
             android.R.id.home -> finish()
         }

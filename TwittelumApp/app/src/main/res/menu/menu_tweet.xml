@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_camera"
+        android:icon="@drawable/ic_camera"
+        android:title="Tirar foto"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/tweet_menu_tweetar"
         android:icon="@drawable/ic_save"
         android:title="Tweetar"
         app:showAsAction="always" />
+
 
 
 </menu>
