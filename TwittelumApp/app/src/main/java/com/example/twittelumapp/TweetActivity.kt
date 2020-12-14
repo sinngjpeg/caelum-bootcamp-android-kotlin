@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.twittelumapp.activities.ListaTweetsActivity
 import com.example.twittelumapp.databinding.ActivityTweetBinding
 import com.example.twittelumapp.db.TwittelumDatabase
+import com.example.twittelumapp.extensions.decodificaParaBase64
 import com.example.twittelumapp.modelo.Tweet
 import com.example.twittelumapp.viewmodel.TweetViewModel
 import com.example.twittelumapp.viewmodel.ViewModelFactory
@@ -73,14 +74,20 @@ class TweetActivity : AppCompatActivity() {
     }
 
     fun publicaTweet() {
-        val campoDeMensagemDoTweet = findViewById<EditText>(R.id.tweet_mensagem)
-        val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
-        val tweet = Tweet(mensagemDoTweet)
-        val tweetDao = TwittelumDatabase.getInstance(this).tweetDao()
+
+        val tweet = criaTweet()
+//        val tweetDao = TwittelumDatabase.getInstance(this).tweetDao()
         viewModel.salva(tweet)
         Toast.makeText(this, "$tweet foi salvo com sucesso", Toast.LENGTH_LONG).show()
         //finish()
 
+    }
+
+    fun criaTweet(): Tweet {
+        val campoDeMensagemDoTweet = findViewById<EditText>(R.id.tweet_mensagem)
+        val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
+        val foto: String? = binding.tweetFoto.tag as String?
+        return Tweet(mensagemDoTweet, foto)
     }
 
 
@@ -101,9 +108,12 @@ class TweetActivity : AppCompatActivity() {
 
 
     private fun carregaFoto() {
+
         val bitmap = BitmapFactory.decodeFile(localFoto)
         val bm = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
         binding.tweetFoto.setImageBitmap(bm)
+        val fotoNaBase64 = bm.decodificaParaBase64()
+        binding.tweetFoto.tag = fotoNaBase64
         binding.tweetFoto.scaleType = ImageView.ScaleType.FIT_XY
     }
 
@@ -117,3 +127,6 @@ class TweetActivity : AppCompatActivity() {
     }
 
 }
+
+
+
