@@ -1,5 +1,6 @@
 package com.example.twittelumapp.activities
 
+import TweetAdapter
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -68,8 +69,10 @@ class ListaTweetsActivity : AppCompatActivity() {
     }
 
     private fun observer(): Observer<List<Tweet>> {
-        return Observer {
-            binding.listaTweet.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, it)
+        return Observer { tweets ->
+            tweets?.let {
+                binding.listaTweet.adapter = TweetAdapter(tweets)
+            }
         }
     }
 
