@@ -1,5 +1,6 @@
 package com.example.twittelumapp
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -28,7 +29,7 @@ import java.io.File
 
 class TweetActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityTweetBinding
+    private lateinit var binding: ActivityTweetBinding
 
     private var localFoto: String? = null
 
@@ -87,7 +88,7 @@ class TweetActivity : AppCompatActivity() {
         val abrirCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val caminhoFoto = defineLocalDaFoto()
         abrirCamera.putExtra(MediaStore.EXTRA_OUTPUT, caminhoFoto)
-        startActivity(abrirCamera)
+        startActivityForResult(abrirCamera, 123)
     }
 
     fun defineLocalDaFoto(): Uri? {
@@ -98,12 +99,6 @@ class TweetActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (localFoto != null) {
-            carregaFoto()
-        }
-    }
 
     private fun carregaFoto() {
         val bitmap = BitmapFactory.decodeFile(localFoto)
@@ -111,4 +106,14 @@ class TweetActivity : AppCompatActivity() {
         binding.tweetFoto.setImageBitmap(bm)
         binding.tweetFoto.scaleType = ImageView.ScaleType.FIT_XY
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123) {
+            if (resultCode == Activity.RESULT_OK) {
+                carregaFoto()
+            }
+        }
+    }
+
 }
