@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import br.com.caelum.twittelumappweb.R
 import br.com.caelum.twittelumappweb.databinding.ActivityMainBinding
+import br.com.caelum.twittelumappweb.fragment.BuscadorDeTweetsFragment
 import br.com.caelum.twittelumappweb.fragment.ListaTweetsFragment
 
 
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.menu_tweets -> {
                     exibe(ListaTweetsFragment())
+                    true
+                }
+                R.id.menu_busca -> {
+                    exibe(BuscadorDeTweetsFragment())
                     true
                 }
                 else -> {
