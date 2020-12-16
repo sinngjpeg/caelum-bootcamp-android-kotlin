@@ -4,9 +4,9 @@
 
     <item
         android:id="@+id/barra_busca"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always|collapseActionView"
         android:icon="@drawable/ic_busca"
-        android:title="Buscar" />
+        android:title="Buscar"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
 
 </menu>

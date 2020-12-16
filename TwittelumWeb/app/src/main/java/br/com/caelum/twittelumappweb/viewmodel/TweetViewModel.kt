@@ -9,7 +9,7 @@ class TweetViewModel(private val repository: TweetRepository) : ViewModel() {
 
     fun salva(tweet: Tweet) = repository.salva(tweet)
 
-    fun tweets() : List<Tweet> = listOf(
+    fun tweets(): List<Tweet> = listOf(
             Tweet("bla", null),
             Tweet("ble", null),
             Tweet("bli", null),
