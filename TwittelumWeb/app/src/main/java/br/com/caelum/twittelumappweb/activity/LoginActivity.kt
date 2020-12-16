@@ -1,6 +1,9 @@
 package br.com.caelum.twittelumappweb.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import br.com.caelum.twittelumappweb.databinding.ActivityLoginBinding
@@ -24,7 +27,26 @@ class LoginActivity : AppCompatActivity() {
         binding.loginCriar.setOnClickListener { viewModel.cria(usuarioDaTela()) }
         binding.loginEntrar.setOnClickListener { viewModel.loga(usuarioDaTela()) }
 
+
+        viewModel.getErro().observe(this) {
+            it?.let {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                Log.i("error", it.message)
+            }
+        }
+        viewModel.getUsuario().observe(this) {
+            it?.let {
+                vaiParaMain()
+            }
+        }
     }
+
+    private fun vaiParaMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 
     private fun usuarioDaTela(): Usuario {
         val nome = binding.loginCampoNome.text.toString()
