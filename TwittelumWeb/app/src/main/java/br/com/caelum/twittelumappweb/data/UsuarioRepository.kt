@@ -14,9 +14,7 @@ class UsuarioRepository(private val webclient: UsuarioWebClient) {
     fun getUsuario(): LiveData<Usuario> = usuarioDaSessao
     fun getErro(): LiveData<Throwable> = errorLiveData
 
-    fun entra(usuario: Usuario) {
-        Log.i("loginConta", "$usuario")
-    }
+    fun entra(usuario: Usuario) = webclient.fazLogin(usuario, sucesso, falha)
 
     fun cadastra(usuario: Usuario) = webclient.registra(usuario, sucesso, falha)
 

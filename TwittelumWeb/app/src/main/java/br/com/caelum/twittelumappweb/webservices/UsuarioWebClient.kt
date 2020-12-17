@@ -15,6 +15,20 @@ class UsuarioWebClient(retrofit: Retrofit) {
     }
 
 
+    fun fazLogin(usuario: Usuario, sucesso: (usuario: Usuario) -> Unit, falha: (Throwable) -> Unit) {
+        val chamadaPraLogar = service.loga(usuario)
+        chamadaPraLogar.enqueue(object : Callback<Usuario> {
+            override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                falha(t)
+            }
+
+            override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+                response.body()?.let(sucesso)
+                response.errorBody()?.let { falha(Throwable(it.string())) }
+            }
+        })
+    }
+
     fun registra(usuario: Usuario, sucesso: (usuario: Usuario) -> Unit, falha: (Throwable) -> Unit) {
 
         val chamadaPraCriar = service.cria(usuario)
@@ -29,10 +43,20 @@ class UsuarioWebClient(retrofit: Retrofit) {
         })
 
 
-    }
-}
 
-private interface UsuarioService {
-    @POST("/usuario")
-    fun cria(@Body usuario: Usuario): Call<Usuario>
+
+    }
+
+
+    private interface UsuarioService {
+        @POST("/usuario")
+        fun cria(@Body usuario: Usuario): Call<Usuario>
+
+
+        @POST("/usuario/login")
+        fun loga(@Body usuario: Usuario): Call<Usuario>
+
+
+    }
+
 }
