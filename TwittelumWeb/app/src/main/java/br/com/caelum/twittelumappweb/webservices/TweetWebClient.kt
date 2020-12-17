@@ -1,0 +1,39 @@
+package br.com.caelum.twittelumappweb.webservices
+
+import br.com.caelum.twittelumappweb.modelo.TweetComUsuario
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+
+class TweetWebClient(retrofit: Retrofit) {
+
+    private val tweetService = retrofit.create(TweetService::class.java)
+
+    fun insere(
+            tweet: TweetComUsuario,
+            sucesso: (tweet: TweetComUsuario) -> Unit,
+            falha: (erro: Throwable) -> Unit
+    ) {
+        tweetService.salva(tweet).enqueue(object : Callback<TweetComUsuario> {
+            override fun onFailure(call: Call<TweetComUsuario>, t: Throwable) {
+                falha(t)
+            }
+
+            override fun onResponse(call: Call<TweetComUsuario>, response: Response<TweetComUsuario
+                    >) {
+                response.body()?.let(sucesso)
+            }
+        })
+
+    }
+
+    private interface TweetService {
+        @POST("/tweet")
+        fun salva(@Body tweet: TweetComUsuario): Call<TweetComUsuario>
+    }
+
+}

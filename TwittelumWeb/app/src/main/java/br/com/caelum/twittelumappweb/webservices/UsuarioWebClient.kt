@@ -16,7 +16,9 @@ class UsuarioWebClient(retrofit: Retrofit) {
 
 
     fun fazLogin(usuario: Usuario, sucesso: (usuario: Usuario) -> Unit, falha: (Throwable) -> Unit) {
+
         val chamadaPraLogar = service.loga(usuario)
+
         chamadaPraLogar.enqueue(object : Callback<Usuario> {
             override fun onFailure(call: Call<Usuario>, t: Throwable) {
                 falha(t)
