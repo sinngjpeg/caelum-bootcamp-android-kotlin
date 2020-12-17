@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import br.com.caelum.twittelumappweb.Carregador
 import br.com.caelum.twittelumappweb.databinding.TweetItemBinding
-import br.com.caelum.twittelumappweb.modelo.Tweet
+import br.com.caelum.twittelumappweb.modelo.TweetComUsuario
 
-class TweetAdapter(private val tweets: List<Tweet>) : BaseAdapter() {
+class TweetAdapter(private val tweets: List<TweetComUsuario>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
@@ -24,6 +24,7 @@ class TweetAdapter(private val tweets: List<Tweet>) : BaseAdapter() {
             binding.itemFoto.setImageBitmap(Carregador.decodifica(it))
         }
 
+        binding.itemDono.text = tweet.dono.nome
         return binding.root
 
     }

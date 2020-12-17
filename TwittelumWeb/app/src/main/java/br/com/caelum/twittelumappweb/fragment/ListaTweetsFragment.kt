@@ -22,9 +22,12 @@ class ListaTweetsFragment : Fragment() {
 
         val binding = ListaTweetsFragmentBinding.inflate(inflater, container, false)
 
-        val lista = viewModel.tweets()
+        viewModel.tweets().observe(this) {
+            it?.let {
+                binding.listaTweets.adapter = TweetAdapter(it)
+            }
+        }
 
-        binding.listaTweets.adapter = TweetAdapter(lista)
         return binding.root
 
 
