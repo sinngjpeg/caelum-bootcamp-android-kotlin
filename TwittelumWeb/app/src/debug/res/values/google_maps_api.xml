@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=40:3F:54:C3:AE:B5:8C:07:15:71:E7:B5:D0:52:E3:D5:CB:A1:FA:D6%3Bbr.com.caelum.twittelumappweb
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    br.com.caelum.twittelumappweb
+
+    SHA-1 certificate fingerprint:
+    40:3F:54:C3:AE:B5:8C:07:15:71:E7:B5:D0:52:E3:D5:CB:A1:FA:D6
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBTA4ajaFC5LPf-v1U8U6RfReQsyVb0fp4</string>
+</resources>
